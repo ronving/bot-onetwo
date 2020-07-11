@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 import static bot.Keys.*;
 
 public class Application {
@@ -22,19 +24,14 @@ public class Application {
         webDriver.manage().window().maximize();
         webDriver.get(WEBSITE);
 
-        WebDriverWait webDriverWait = new WebDriverWait(webDriver, 10);
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, 15);
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pathToElement)));
 
         do {
-            if (playersOnServer != null) {
-                try {
-                    Thread.sleep(5*60*1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+            webDriver.navigate().refresh();
+            webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pathToElement)));
             playersOnServer = webDriver.findElement(By.xpath(pathToElement));
-
+            System.out.println(playersOnServer.getText().charAt(0));
         } while (playersOnServer.getText().charAt(0) < '3');
 
         MailSender.sendMail(MAIL_RECEIVER, playersOnServer.getText().charAt(0));
