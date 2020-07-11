@@ -37,7 +37,7 @@ public class Application {
 
         } while (playersOnServer.getText().charAt(0) < '3');
 
-        MailSender.sendMail(MAIL_RECEIVER);
+        MailSender.sendMail(MAIL_RECEIVER, playersOnServer.getText().charAt(0));
 
         webDriver.quit();
     }

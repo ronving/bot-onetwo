@@ -9,7 +9,7 @@ import static bot.Keys.*;
 public class MailSender {
 
 
-    public static void sendMail(String receiver) {
+    public static void sendMail(String receiver, Character playersOnServer) {
 
         try {
             Email email = new SimpleEmail();
@@ -30,7 +30,8 @@ public class MailSender {
             email.setSubject("SERVER IS READY!");
 
             // Email message.
-            email.setMsg("Server meets the requirements to count statistics. PLAY NOW!");
+            email.setMsg("Server meets the requirements to count statistics. PLAY NOW!\n" +
+                    "Players on server: " + playersOnServer);
 
             // Receivers
             email.addTo(MAIL_RECEIVER);
